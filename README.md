@@ -4,10 +4,7 @@
 [![Survey](https://github.com/sindresorhus/awesome/blob/main/media/mentioned-badge.svg)](https://github.com/dk-liang/Awesome-Visual-Transformer) 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) 
 [![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com) 
-[![GitHub license](https://badgen.net/github/license/ZhangGongjie/SAM-DETR)](https://github.com/ZhangGongjie/SAM-DETR/blob/master/LICENSE)
-
-This repository is an official PyTorch implementation of the
-CVPR 2022 paper "[Accelerating DETR Convergence via Semantic-Aligned Matching](https://arxiv.org/abs/2203.06883)". 
+[![GitHub license](https://badgen.net/github/license/ZhangGongjie/SAM-DETR)](https://github.com/ZhangGongjie/SAM-DETR/blob/master/LICENSE) 
 
 <b>*[UPDATE on 21 Apr 2022]*</b> &nbsp;  We found that with a very simple modification (with no extra computational cost), SAM-DETR can achieve better performance. On MS-COCO, **SAM-DETR w/ SMCA** can achieve **37.0 AP** within 12 epochs, and **42.7 AP** within 50 epochs. We will release the updated training scripts, model weights, and logs in the future. Please stay tuned!
 
@@ -79,11 +76,11 @@ The implementation codes are developed and tested with the following environment
 - 8x NVIDIA V100 GPUs (32GB)
 - CUDA 10.1
 - Python == 3.8
-- PyTorch == 1.8.1+cu101, TorchVision == 0.9.1+cu101
+- Paddlepaddle == 2.1.0
 - GCC == 7.5.0
 - cython, pycocotools, tqdm, scipy
 
-We recommend using the exact setups above. However, other environments (Linux, Python>=3.7, CUDA>=9.2, GCC>=5.4, PyTorch>=1.5.1, TorchVision>=0.6.1) should also work.
+We recommend using the exact setups above. However, other environments (Linux, Python>=3.7, CUDA>=9.2, GCC>=5.4, Paddlepaddle>=2.0.0) should also work.
 
 ### Code Installation
 
@@ -102,11 +99,11 @@ Then, activate the environment:
 conda activate sam_detr
 ```
 
-Then, install PyTorch and TorchVision:
+Then, install paddlepaddle:
 
 (preferably using our recommended setups; CUDA version should match your own local environment)
 ```bash
-conda install pytorch=1.8.1 torchvision=0.9.1 cudatoolkit=10.1 -c pytorch
+pip install paddlepaddle-gpu==2.1.0 -f https://www.paddlepaddle.org.cn/whl/windows/mkl/avx/stable.html
 ```
 
 After that, install other requirements:
@@ -177,9 +174,9 @@ experiments, we use 8 GPUs with a batch size of 1 on each GPU.
 ### Training
 To perform training on COCO *train2017*, modify the arguments based on the scripts below:
 ```shell
-python -m torch.distributed.launch \
-    --nproc_per_node=4 \        # number of GPUs to perform training
-    --use_env main.py \
+python -m paddle.distributed.launch \
+    --gpus="0,1,2,3" \          # specify GPU ids to perform training
+    main.py \
     --batch_size 4 \            # batch_size on individual GPU (this is *NOT* total batch_size)
     --smca \                    # to integrate with SMCA, remove this line to disable SMCA
     --dilation \                # to enable DC5, remove this line to disable DC5
@@ -193,18 +190,19 @@ More arguments and their explanations are available at ```main.py```.
 ### Evaluation
 To evaluate a model on COCO *val2017*, simply add ```--resume``` and ```--eval``` arguments to your training scripts:
 ```shell
-python -m torch.distributed.launch \
-    --nproc_per_node=4 \
-    --use_env main.py \
-    --batch_size 4 \
-    --smca \
-    --dilation \                
-    --multiscale \ 
-    --epochs 50 \
-    --lr_drop 40 \ 
-    --resume <path/to/checkpoint.pth> \   # trained model weights
+python -m paddle.distributed.launch \
+    --gpus="0,1,2,3" \          # specify GPU ids to perform training
+    main.py \
+    --batch_size 4 \            # batch_size on individual GPU (this is *NOT* total batch_size)
+    --smca \                    # to integrate with SMCA, remove this line to disable SMCA
+    --dilation \                # to enable DC5, remove this line to disable DC5
+    --multiscale \              # to enable multi-scale, remove this line to disable multiscale
+    --epochs 50 \               # total number of epochs to train
+    --lr_drop 40 \              # when to drop learning rate
+    --resume <path/to/checkpoint.pdparams> \  # trained model weights
     --eval \                              # this means that only evaluation will be performed
-    --output_dir output/xxxx   
+    --output_dir output/xxxx    # where to store outputs, remove this line for not storing outputs
+
 ```
 
 
