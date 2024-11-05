@@ -385,29 +385,3 @@ Note:
 2. "DC5" means removing the stride in C5 stage of ResNet and add a dilation of 2 instead.
 3. The GFLOPs of our models are estimated using [fvcore](https://github.com/facebookresearch/fvcore) on the first 100 images in *COCO val2017*. GFLOPs varies as input image sizes change. There may exist slight difference from actual values.
 
-
-
-
-
-## License
-
-The implementation codes of SAM-DETR are released under the MIT license.
-
-Please see the [LICENSE](LICENSE) file for more information.
-
-However, prior works' licenses also apply. It is your responsibility to ensure you comply with all license requirements.
-
-## Citation
-
-If you find SAM-DETR useful or inspiring, please consider citing:
-
-```bibtex
-@inproceedings{zhang2022-SAMDETR,
-  title      = {Accelerating {DETR} Convergence via Semantic-Aligned Matching},
-  author     = {Zhang, Gongjie and Luo, Zhipeng and Yu, Yingchen and Cui, Kaiwen and Lu, Shijian},
-  booktitle  = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-  pages      = {949-958},
-  year       = {2022},
-}
-```
-
