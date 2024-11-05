@@ -1,12 +1,5 @@
 # SAM-DETR (Semantic-Aligned-Matching DETR)
 
-[![arXiv](https://img.shields.io/badge/arXiv-2203.06883-b31b1b.svg)](https://arxiv.org/abs/2203.06883)
-[![Survey](https://github.com/sindresorhus/awesome/blob/main/media/mentioned-badge.svg)](https://github.com/dk-liang/Awesome-Visual-Transformer) 
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) 
-[![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com) 
-[![GitHub license](https://badgen.net/github/license/ZhangGongjie/SAM-DETR)](https://github.com/ZhangGongjie/SAM-DETR/blob/master/LICENSE) 
-
-<b>*[UPDATE on 21 Apr 2022]*</b> &nbsp;  We found that with a very simple modification (with no extra computational cost), SAM-DETR can achieve better performance. On MS-COCO, **SAM-DETR w/ SMCA** can achieve **37.0 AP** within 12 epochs, and **42.7 AP** within 50 epochs. We will release the updated training scripts, model weights, and logs in the future. Please stay tuned!
 
 ## Introduction
 
@@ -418,10 +411,3 @@ If you find SAM-DETR useful or inspiring, please consider citing:
 }
 ```
 
-
-
-## Acknowledgement
-
-Our SAM-DETR is heavily inspired by many outstanding prior works, including [DETR](https://github.com/facebookresearch/detr), [Conditional-DETR](https://github.com/Atten4Vis/ConditionalDETR), 
-[SMCA-DETR](https://github.com/gaopengcuhk/SMCA-DETR), and [Deformable DETR](https://github.com/fundamentalvision/Deformable-DETR).
-Thank the authors of above projects for open-sourcing their implementation codes!
